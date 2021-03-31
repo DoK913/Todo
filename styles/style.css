@@ -60,7 +60,14 @@ ul {
 .refs {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-evenly;
+  padding: 2px;
+}
+
+.delButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
   padding: 2px;
 }
 
@@ -82,10 +89,6 @@ a {
   cursor: pointer;
 }
 
-.hiddenElement {
-  display: none;
-}
-
 .selected {
   outline: #53bdff 1px solid;
 }
@@ -103,7 +106,7 @@ a {
 }
 
 .placeholder {
-  outline: gray 1px solid;
+  outline: rgb(97, 241, 68) 1px solid;
 }
 
 @media (max-width: 500px) {

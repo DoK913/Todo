@@ -4,8 +4,8 @@ class DragNDrop {
     this.todoList = todoList;
     this.x = 0;
     this.y = 0;
-    this.draggingEle;
-    this.placeholder;
+    // this.draggingEle = null;
+    // this.placeholder = null;
     this.isDraggingStarted = false;
     this.prevEle = {};
   }
@@ -58,13 +58,9 @@ class DragNDrop {
 
       // User moves item to the top
       if (prevEle && this.isAbove(this.draggingEle, prevEle)) {
-        // The current order    -> The new order
-        // this.prevEle         -> placeholder
-        // draggingEle          -> draggingEle
-        // placeholder          -> this.prevEle
         this.swap(this.placeholder, this.draggingEle);
         this.swap(this.placeholder, prevEle);
-        //LocalStorageSave
+
         //condition for prevent call swaptodo for same id's during dragging
         if (prevEle.id !== this.prevEle.id && this.isDraggingStarted) {
           this.prevEle = prevEle;
@@ -82,7 +78,6 @@ class DragNDrop {
         // nextEle         -> draggingEle
         this.swap(nextEle, this.placeholder);
         this.swap(nextEle, this.draggingEle);
-        //localStorageSave
         this.todoList.swapTodos(nextEle.id, this.draggingEle.id);
       }
     }

@@ -1,7 +1,7 @@
 class Todo {
-  constructor(text, id, checked) {
+  constructor(text, id, isDone) {
     this.text = text;
     this.id = id;
-    this.checked = checked;
+    this.isDone = isDone;
   }
 }
