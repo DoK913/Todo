@@ -1,6 +1,7 @@
 class Controller {
-  constructor(todoList) {
+  constructor(todoList, newTodo) {
     this.todoList = todoList;
+    this.todoExamp = newTodo;
     this.DND = new DragNDrop(todoList);
     this.render();
     this.initEvents();
@@ -27,10 +28,13 @@ class Controller {
     li.classList.add("draggable");
     li.addEventListener("mousedown", (e) => this.DND.mouseDownHandler(e));
 
+    // const container = document.createElement("div");
+
     const deleteButton = document.createElement("span");
     deleteButton.classList.add("delete");
     deleteButton.innerText = "x";
     deleteButton.addEventListener("click", (e) => this.deleteElement(e));
+
     li.appendChild(deleteButton);
 
     const checkboxField = document.createElement("input");
@@ -94,20 +98,24 @@ class Controller {
 
   // clear todolist
   clearList() {
-    this.todoList.removeAll();
-    this.render();
+    if (window.confirm("Clear Todo List?")) {
+      this.todoList.removeAll();
+      this.render();
+    }
   }
 
   // clear completed todo's
   clearCompleted() {
-    this.todoList.removeCompleted();
-    this.render();
+    if (window.confirm("Delete completed Todo's?")) {
+      this.todoList.removeCompleted();
+      this.render();
+    }
   }
 
   // delete element
   deleteElement(event) {
     const id = event.target.parentNode.id;
-    if (event.target.className === "delete") {
+    if (window.confirm("Delete this Todo?")) {
       this.todoList.removeTodo(id);
       this.render();
     }
@@ -118,7 +126,8 @@ class Controller {
     const id = event.target.parentNode.id;
     const todo = this.todoList.getTodoById(id);
     if (todo) {
-      this.todoList.toggleTodo(id, !todo.isDone);
+      this.todoExamp.markDone(!todo.isDone);
+      this.todoList.toggleTodo(id, this.todoExamp.getMark());
       this.render();
     }
   }

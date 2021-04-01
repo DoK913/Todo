@@ -1,2 +1,3 @@
 const newTodoList = new TodoList();
-const controller = new Controller(newTodoList);
+const newTodo = new Todo();
+const controller = new Controller(newTodoList, newTodo);

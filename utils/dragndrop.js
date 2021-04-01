@@ -4,8 +4,6 @@ class DragNDrop {
     this.todoList = todoList;
     this.x = 0;
     this.y = 0;
-    // this.draggingEle = null;
-    // this.placeholder = null;
     this.isDraggingStarted = false;
     this.prevEle = {};
   }
