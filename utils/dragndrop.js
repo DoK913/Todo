@@ -1,6 +1,7 @@
 // Drag and Drop
 class DragNDrop {
-  constructor(todoList) {
+  constructor(todoList, draggableElement) {
+    this.draggableElement = draggableElement;
     this.todoList = todoList;
     this.x = 0;
     this.y = 0;
@@ -8,7 +9,11 @@ class DragNDrop {
     this.prevEle = {};
   }
 
-  mouseDownHandler = function (e) {
+  mouseDownHandler(e) {
+    if (!e.target.classList.contains("draggable")) {
+      return;
+    }
+
     this.draggingEle = e.target;
 
     // Calculate the mouse position
@@ -17,11 +22,11 @@ class DragNDrop {
     this.y = e.pageY - rect.top;
 
     // Attach the listeners to `document`
-    document.addEventListener("mousemove", (e) => this.mouseMoveHandler(e));
-    document.addEventListener("mouseup", (e) => this.mouseUpHandler(e));
-  };
+    document.addEventListener("mousemove", this.mouseMoveHandler.bind(this));
+    document.addEventListener("mouseup", this.mouseUpHandler.bind(this));
+  }
 
-  mouseMoveHandler = function (e) {
+  mouseMoveHandler(e) {
     if (this.draggingEle) {
       const draggingRect = this.draggingEle.getBoundingClientRect();
 
@@ -79,9 +84,9 @@ class DragNDrop {
         this.todoList.swapTodos(nextEle.id, this.draggingEle.id);
       }
     }
-  };
+  }
 
-  mouseUpHandler = function () {
+  mouseUpHandler() {
     // Remove the placeholder
     this.placeholder &&
       this.placeholder.parentNode &&
@@ -99,11 +104,11 @@ class DragNDrop {
     this.draggingEle = null;
     this.prevEle = {};
     // Remove the handlers of `mousemove` and `mouseup`
-    document.removeEventListener("mousemove", (e) => this.mouseMoveHandler(e));
-    document.removeEventListener("mouseup", (e) => this.mouseUpHandler(e));
-  };
+    document.removeEventListener("mousemove", this.mouseMoveHandler.bind(this));
+    document.removeEventListener("mouseup", this.mouseUpHandler.bind(this));
+  }
 
-  swap = function (nodeA, nodeB) {
+  swap(nodeA, nodeB) {
     const parentA = nodeA.parentNode;
     const siblingA = nodeA.nextSibling === nodeB ? nodeA : nodeA.nextSibling;
 
@@ -112,13 +117,13 @@ class DragNDrop {
 
     // Move `nodeB` to before the sibling of `nodeA`
     parentA.insertBefore(nodeB, siblingA);
-  };
+  }
 
-  isAbove = function (nodeA, nodeB) {
+  isAbove(nodeA, nodeB) {
     // Get the bounding rectangle of nodes
     const rectA = nodeA.getBoundingClientRect();
     const rectB = nodeB.getBoundingClientRect();
 
     return rectA.top + rectA.height / 2 < rectB.top + rectB.height / 2;
-  };
+  }
 }

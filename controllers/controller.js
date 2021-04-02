@@ -1,8 +1,7 @@
 class Controller {
-  constructor(todoList, newTodo) {
+  constructor(todoList) {
     this.todoList = todoList;
-    this.todoExamp = newTodo;
-    this.DND = new DragNDrop(todoList);
+    this.DND = new DragNDrop(todoList, "li");
     this.render();
     this.initEvents();
   }
@@ -26,14 +25,13 @@ class Controller {
     const li = document.createElement("li");
     li.id = id;
     li.classList.add("draggable");
-    li.addEventListener("mousedown", (e) => this.DND.mouseDownHandler(e));
-
-    // const container = document.createElement("div");
+    li.classList.add("listItem");
+    li.addEventListener("mousedown", this.DND.mouseDownHandler.bind(this.DND));
 
     const deleteButton = document.createElement("span");
     deleteButton.classList.add("delete");
     deleteButton.innerText = "x";
-    deleteButton.addEventListener("click", (e) => this.deleteElement(e));
+    deleteButton.addEventListener("click", this.deleteElement.bind(this));
 
     li.appendChild(deleteButton);
 
@@ -41,10 +39,11 @@ class Controller {
     checkboxField.type = "checkbox";
     checkboxField.classList.add("check");
     checkboxField.checked = isDone;
-    checkboxField.addEventListener("click", (e) => this.toggleMark(e));
+    checkboxField.addEventListener("click", this.toggleMark.bind(this));
     li.appendChild(checkboxField);
 
-    const label = document.createElement("label");
+    const label = document.createElement("span");
+    label.classList.add("todoLabel");
     label.innerText = text;
     li.appendChild(label);
 
@@ -72,22 +71,22 @@ class Controller {
   initEvents() {
     document
       .querySelector("form")
-      .addEventListener("submit", (e) => this.submit(e));
+      .addEventListener("submit", this.submit.bind(this));
     document
       .getElementById("all")
-      .addEventListener("click", (e) => this.switchStatus(e));
+      .addEventListener("click", this.switchStatus.bind(this));
     document
       .getElementById("active")
-      .addEventListener("click", (e) => this.switchStatus(e));
+      .addEventListener("click", this.switchStatus.bind(this));
     document
       .getElementById("completed")
-      .addEventListener("click", (e) => this.switchStatus(e));
+      .addEventListener("click", this.switchStatus.bind(this));
     document
       .getElementById("clear")
-      .addEventListener("click", () => this.clearList());
+      .addEventListener("click", this.clearList.bind(this));
     document
       .getElementById("rmCompleted")
-      .addEventListener("click", () => this.clearCompleted());
+      .addEventListener("click", this.clearCompleted.bind(this));
   }
 
   // change selected filter on click
@@ -126,8 +125,7 @@ class Controller {
     const id = event.target.parentNode.id;
     const todo = this.todoList.getTodoById(id);
     if (todo) {
-      this.todoExamp.markDone(!todo.isDone);
-      this.todoList.toggleTodo(id, this.todoExamp.getMark());
+      this.todoList.toggleTodo(id, !todo.isDone);
       this.render();
     }
   }

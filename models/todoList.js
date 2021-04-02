@@ -8,7 +8,9 @@ class TodoList {
   loadTodos() {
     const todosFromStorage = JSON.parse(localStorage.getItem("todos"));
     if (todosFromStorage) {
-      this.todos = todosFromStorage;
+      this.todos = todosFromStorage.map(
+        (todo) => new Todo(todo.text, todo.id, todo.isDone)
+      );
     }
   }
 
@@ -32,7 +34,7 @@ class TodoList {
     );
 
     if (todoIndex >= 0) {
-      this.todos[todoIndex].isDone = anotherDone;
+      this.todos[todoIndex].markDone(anotherDone);
       this.saveTodos();
     }
   }

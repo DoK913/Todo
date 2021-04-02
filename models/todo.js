@@ -8,8 +8,4 @@ class Todo {
   markDone(boolean) {
     this.isDone = boolean;
   }
-
-  getMark() {
-    return this.isDone;
-  }
 }
