@@ -21,7 +21,7 @@ This To-Do application using next technologies:
 
 # To launch the app, you need to:
 
-- At "server" folder necessary to run next commands:
+- Before the first launch At "server" folder necessary to run next commands:
 
 ```sh
 npm install express --save
