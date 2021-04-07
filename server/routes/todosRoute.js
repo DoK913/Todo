@@ -11,7 +11,6 @@ router.use(bodyParser.json());
 router.post("/todos", controller.createNew);
 router.get("/todos", controller.getAllTodos);
 router.patch("/todos/:todoId", controller.update);
-router.delete("/todos", controller.deleteAll);
 router.delete("/todos/byIds", controller.deleteByIds);
 router.put("/todos", controller.saveAll);
 

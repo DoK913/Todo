@@ -1,6 +1,6 @@
 const path = "../data/todos.json";
 
-const file = require("../data/model.js");
+const file = require("./dataStorageAPI.js");
 
 async function createNew(req, res) {
   try {
@@ -20,27 +20,23 @@ async function getAllTodos(req, res) {
   res.json(await file.readFile());
 }
 
-async function deleteAll(req, res) {
-  try {
-    await file.rewriteFile([]);
-
-    res.status(200).end();
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-}
-
 async function deleteByIds(req, res) {
   try {
-    const idsToDelete = req.body;
-    let data = await file.readFile();
+    const idsToDelete = req.body.ids;
+    const deleteAll = req.body.deleteAll;
 
-    data = data.filter(function (item) {
-      const isIncluded = idsToDelete.includes(item.id);
-      return !isIncluded;
-    });
-    await file.rewriteFile(data);
+    if (deleteAll) {
+      await file.rewriteFile([]);
+    } else {
+      let data = await file.readFile();
+
+      data = data.filter(function (item) {
+        const isIncluded = idsToDelete.includes(String(item.id));
+        return !isIncluded;
+      });
+
+      await file.rewriteFile(data);
+    }
 
     res.status(200).end();
   } catch (error) {
@@ -86,7 +82,6 @@ async function saveAll(req, res) {
 module.exports = {
   createNew: createNew,
   getAllTodos: getAllTodos,
-  deleteAll: deleteAll,
   deleteByIds: deleteByIds,
   update: update,
   saveAll: saveAll,

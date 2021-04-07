@@ -18,22 +18,21 @@ This To-Do application using next technologies:
 - JavaScript
 - Node.js (v14.16.0.)
 - Express.js framework
+- Git-Bash (Terminal)
 
 # To launch the app, you need to:
 
-- Before the first launch at "server" folder necessary to run next commands:
+- To set actual dependencies use tjhe following command at project root directory:
 
 ```sh
-npm install express --save
-npm install --save-dev nodemon
-npm i connect-timeout cors
+cd ./server && npm i
 ```
 
 - Install the python language on your computer. Download link: https://www.python.org/downloads/
-- Launch the terminal from folder "server" and run the following command:
+- Launch the terminal from project root directory and run the following command:
 
 ```sh
-npm run start:dev
+cd ./server && npm run start:dev
 ```
 
 - Launch the terminal from the applications folder and run the following command:

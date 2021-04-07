@@ -1,4 +1,4 @@
-const baseURL = `http://localhost:3333`;
+const baseURL = `http://${config.development.host}:${config.development.port}`;
 
 function apiRequest(method, route, body) {
   return fetch(`${baseURL}/${route}`, {

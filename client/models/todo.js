@@ -4,4 +4,8 @@ class Todo {
     this.id = id;
     this.isDone = isDone;
   }
+
+  markDone(boolean) {
+    this.isDone = boolean;
+  }
 }

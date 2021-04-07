@@ -1,15 +1,15 @@
 {
   "name": "task",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.2",
+  "description": "TODO application with server and json Storage",
   "main": "index.js",
   "scripts": {
-    "start": "set NODE_ENV=production&&node index.js",
-    "start:dev": "set NODE_ENV=development&&nodemon index.js",
+    "start": "cross-env NODE_ENV=production node index.js",
+    "start:dev": "cross-env NODE_ENV=development nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "zoldok913",
   "license": "ISC",
   "dependencies": {
     "connect-timeout": "^1.9.0",
@@ -17,6 +17,7 @@
     "express": "^4.17.1"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "nodemon": "^2.0.7"
   }
 }

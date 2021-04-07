@@ -21,16 +21,11 @@ class TodoList {
     await this.loadTodos();
   }
 
-  async removeTodo(id) {
-    await apiRequest("DELETE", "todos/byIds", JSON.stringify([id]));
-    await this.loadTodos();
-  }
-
   async toggleTodo(id, anotherDone) {
     const todo = this.todos.find((todo) => String(todo.id) === String(id));
 
     if (todo) {
-      todo.isDone = anotherDone;
+      todo.markDone(anotherDone);
       await apiRequest("PATCH", `todos/${id}`, JSON.stringify(todo));
       await this.loadTodos();
     }
@@ -63,16 +58,30 @@ class TodoList {
     return this.status;
   }
 
+  async removeTodo(id) {
+    console.log(id);
+    await apiRequest("DELETE", "todos/byIds", JSON.stringify({ ids: [id] }));
+    await this.loadTodos();
+  }
+
   async removeAll() {
-    await apiRequest("DELETE", "todos", "");
+    await apiRequest(
+      "DELETE",
+      "todos/byIds",
+      JSON.stringify({ deleteAll: true })
+    );
     await this.loadTodos();
   }
 
   async removeCompleted() {
     const completedIds = this.todos
       .filter((todo) => todo.isDone)
-      .map((todo) => todo.id);
-    await apiRequest("DELETE", "todos/byIds", JSON.stringify(completedIds));
+      .map((todo) => String(todo.id));
+    await apiRequest(
+      "DELETE",
+      "todos/byIds",
+      JSON.stringify({ ids: completedIds })
+    );
     await this.loadTodos();
   }
 
